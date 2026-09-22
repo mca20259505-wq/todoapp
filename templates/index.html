@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📝 My To-Do List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 480px; margin: 40px auto; background: #f4f6f8; }
+    h1 { text-align: center; }
+    form { display: flex; gap: 8px; margin-bottom: 16px; }
+    input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+    button { padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
+    .add { background: #4CAF50; color: white; }
+    li { list-style: none; background: white; margin: 8px 0; padding: 12px; border-radius: 8px;
+         display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .done { text-decoration: line-through; color: #999; }
+    a { text-decoration: none; margin-left: 8px; }
+  </style>
+<base target="_blank">
+</head>
+<body>
+  <h1>📝 {{ todos.name }}</h1>
+
+  <form action="/add" method="post">
+    <input name="title" placeholder="What needs doing?" autofocus>
+    <button class="add">Add ➕</button>
+  </form>
+
+  <ul>
+  {% for t in todos.tasks %}
+    <li>
+      <span class="{{ 'done' if t.done else '' }}">{{ '✅' if t.done else '⬜' }} {{ t.title }}</span>
+      <span>
+        <a href="/toggle/{{ loop.index0 }}">✅</a>
+        <a href="/delete/{{ loop.index0 }}">🗑</a>
+      </span>
+    </li>
+  {% endfor %}
+  </ul>
+
+  <p style="text-align:center"><a href="/save">💾 Save</a></p>
+</body>
+</html>
